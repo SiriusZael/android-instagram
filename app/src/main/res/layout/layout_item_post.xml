@@ -9,8 +9,10 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
+        android:id="@+id/rlHeader"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+        android:layout_alignParentTop="true">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdvProfileImage"
@@ -55,15 +57,52 @@
         android:layout_marginRight="-14dp"
         fresco:placeholderImage="@drawable/gray_rectangle"
         fresco:actualImageScaleType="fitCenter"
-        android:layout_marginTop="52dp"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@+id/rlHeader"/>
+
+    <RelativeLayout
+        android:id="@+id/rlButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/sdvPostImage">
+
+        <ImageButton
+            android:id="@+id/ibHeart"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/ic_heart"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+
+        <ImageButton
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/ibHeart"
+            android:background="@drawable/ic_comment"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+
+        <ImageButton
+            android:id="@+id/ibMenu"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_more_dots"
+            android:layout_width="8dp"
+            android:layout_height="22dp" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/vSeparatorLine"
+        android:layout_below="@+id/rlButtons"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/light_gray_separator_line"></View>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvLikesCount"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/sdvPostImage"
+        android:layout_below="@+id/vSeparatorLine"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:drawableLeft="@drawable/ic_small_heart_filled"
@@ -83,5 +122,12 @@
         android:textSize="14sp"
         android:lineSpacingMultiplier="1.2"
         android:textColor="@color/gray_text"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_below="@+id/tvCaption"
+        android:id="@+id/llComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></LinearLayout>
 
 </RelativeLayout>
