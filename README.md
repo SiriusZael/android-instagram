@@ -1,3 +1,31 @@
+# Assignment 2 - *Instagram*
+
+**Instagram** is an android app that allows viewing your friends pictures through social media.
+
+Submitted by: **Matt Rucker**
+
+Time spent: **6** hours spent in total
+
+## User Stories
+The following user stories **must** be completed:
+
+* [x] Connect the app with the Instagram API and get real time data using async-http-client library.
+* [x] Show the last 2 comments for each photo.
+* [x] User can view all comments for a post within a separate activity.
+* [x] User can share an image to their friends or email to themselves.
+* 
+The following user story is **optional**:
+
+* [x] Robust error handling, check if internet is available, handle network failures.
+
+## Video Walkthrough 
+
+Here's a walkthrough of implemented user stories:
+
+<img src='instagram-demo-2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 
 # Assignment 1 - *Instagram*
 
