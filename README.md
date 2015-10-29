@@ -13,7 +13,8 @@ The following user stories **must** be completed:
 * [x] Show the last 2 comments for each photo.
 * [x] User can view all comments for a post within a separate activity.
 * [x] User can share an image to their friends or email to themselves.
-* 
+
+
 The following user story is **optional**:
 
 * [x] Robust error handling, check if internet is available, handle network failures.
