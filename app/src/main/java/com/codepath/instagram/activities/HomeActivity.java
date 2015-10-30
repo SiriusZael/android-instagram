@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.adapters.InstagramPostsAdapter;
+import com.codepath.instagram.core.MainApplication;
 import com.codepath.instagram.helpers.SimpleVerticalSpacerItemDecoration;
 import com.codepath.instagram.helpers.Utils;
 import com.codepath.instagram.models.InstagramPost;
@@ -50,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         if (!isNetworkAvailable()) {
             showNetworkFailureAlert();
         } else {
-            InstagramClient.getPopularFeed(new JsonHttpResponseHandler() {
+            getRestClient().getPopularFeed(new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     posts.clear();
@@ -61,9 +62,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    showNetworkFailureAlert();
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                public void onFailure(int statusCode, Header[] headers, String response, Throwable errorResponse) {
+                    super.onFailure(statusCode, headers, response, errorResponse);
                 }
             });
         }
@@ -109,5 +109,9 @@ public class HomeActivity extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    public static InstagramClient getRestClient() {
+        return (InstagramClient) InstagramClient.getInstance(InstagramClient.class, MainApplication.sharedApplication());
     }
 }

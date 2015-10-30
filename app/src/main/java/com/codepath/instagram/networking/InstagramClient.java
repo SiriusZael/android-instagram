@@ -1,19 +1,32 @@
 package com.codepath.instagram.networking;
 
-import com.loopj.android.http.AsyncHttpClient;
+import android.content.Context;
+
+import com.codepath.instagram.helpers.Constants;
+import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class InstagramClient {
-    private static final String API_BASE_URL = "https://api.instagram.com/v1/";
-    private static final String CLIENT_ID = "4087714d266740e3b6d1be098eb76539";
+public class InstagramClient extends OAuthBaseClient {
+    private static final String REST_URL = "https://api.instagram.com/v1/";
+    private static final String REST_CONSUMER_KEY = "7fb830b3d9f944caadde9827cacc50a2";
+    private static final Class REST_API_CLASS = InstagramApi.class;
+    private static final String REST_CONSUMER_SECRET = "eaaed381d5264040930f3930937c2aa2";
+    private static final String REDIRECT_URI = Constants.REDIRECT_URI;
+    private static final String SCOPE = Constants.SCOPE;
 
-    public static void getPopularFeed(JsonHttpResponseHandler responseHandler) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(API_BASE_URL + "media/popular?client_id=" + CLIENT_ID, responseHandler);
+    public InstagramClient(Context c) {
+        super(c, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REDIRECT_URI, SCOPE);
     }
 
-    public static void getComments(String mediaId, JsonHttpResponseHandler responseHandler) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(API_BASE_URL + "media/" + mediaId + "/comments?client_id=" + CLIENT_ID, responseHandler);
+    public void getPopularFeed(JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "media/popular", responseHandler);
+    }
+
+    public void getComments(String mediaId, JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "media/" + mediaId + "/comments", responseHandler);
+    }
+
+    public void getOwnFeed(JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "users/self/feed", responseHandler);
     }
 }
