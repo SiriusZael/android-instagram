@@ -10,16 +10,16 @@ import android.support.v7.widget.Toolbar;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.adapters.InstagramCommentsAdapter;
+import com.codepath.instagram.core.MainApplication;
 import com.codepath.instagram.helpers.SimpleVerticalSpacerItemDecoration;
 import com.codepath.instagram.helpers.Utils;
 import com.codepath.instagram.models.InstagramComment;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.apache.http.Header;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
 
 public class CommentsActivity extends AppCompatActivity {
     private RecyclerView rvComments;
@@ -43,7 +43,7 @@ public class CommentsActivity extends AppCompatActivity {
         rvComments.setAdapter(adapter);
         rvComments.setLayoutManager(new LinearLayoutManager(this));
 
-        HomeActivity.getRestClient().getComments(mediaId, new JsonHttpResponseHandler() {
+        MainApplication.getRestClient().getComments(mediaId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 comments.clear();
@@ -54,9 +54,9 @@ public class CommentsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, String response, Throwable error) {
                 showNetworkFailureAlert();
-                super.onFailure(statusCode, headers, throwable, errorResponse);
+                super.onFailure(statusCode, headers, response, error);
             }
         });
     }

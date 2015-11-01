@@ -107,8 +107,11 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
         } else if (post.commentsCount == 0) {
             holder.llComments.setVisibility(View.GONE);
         }
-
-        for (int i = post.comments.size() - 2; i < post.comments.size(); i++) {
+        int lastComments = post.comments.size() - 2;
+        if (lastComments < 0) {
+            lastComments = 0;
+        }
+        for (int i = lastComments; i < post.comments.size(); i++) {
             TextView commentView = (TextView) LayoutInflater.from(context).inflate(R.layout.layout_item_text_comment, null);
             InstagramComment comment = post.comments.get(i);
             String commentUserName = comment.user.userName;

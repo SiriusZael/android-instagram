@@ -29,4 +29,12 @@ public class InstagramClient extends OAuthBaseClient {
     public void getOwnFeed(JsonHttpResponseHandler responseHandler) {
         client.get(REST_URL + "users/self/feed", responseHandler);
     }
+
+    public void searchUsersByName(String name, JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "users/search?q=" + name, responseHandler);
+    }
+
+    public void searchTagsByKeyword(String keyword, JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "tags/search?q=" + keyword, responseHandler);
+    }
 }
