@@ -31,32 +31,13 @@ import java.util.ArrayList;
  * Created by mrucker on 11/1/15.
  */
 public class SearchFragment extends Fragment {
-    private SearchUsersFragmentListener searchUsersFragmentListener;
-    private SearchTagsFragmentListener searchTagsFragmentListener;
-
-    public interface SearchUsersFragmentListener {
-        public void onUsersLoaded(ArrayList<InstagramUser> users);
-    }
-
-    public interface SearchTagsFragmentListener {
-        public void onTagsLoaded(ArrayList<InstagramSearchTag> tags);
-    }
+    private SearchFragmentStatePagerAdapter adapterViewPager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        searchUsersFragmentListener = null;
-        searchTagsFragmentListener = null;
 
         setHasOptionsMenu(true);
-    }
-
-    public void setSearchUsersFragmentListener(SearchUsersFragmentListener listener) {
-        searchUsersFragmentListener = listener;
-    }
-
-    public void setSearchTagsFragmentListener(SearchTagsFragmentListener listener) {
-        searchTagsFragmentListener = listener;
     }
 
     @Nullable
@@ -72,7 +53,7 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.vpSearchType);
-        SearchFragmentStatePagerAdapter adapterViewPager = new SearchFragmentStatePagerAdapter(getChildFragmentManager());
+        adapterViewPager = new SearchFragmentStatePagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapterViewPager);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tlSearchType);
@@ -92,7 +73,29 @@ public class SearchFragment extends Fragment {
                 MainApplication.getRestClient().searchUsersByName(name, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        searchUsersFragmentListener.onUsersLoaded((ArrayList<InstagramUser>)Utils.decodeUsersFromJsonResponse(response));
+                        SearchUsersResultFragment searchUsersResultFragment = (SearchUsersResultFragment) adapterViewPager.getRegisteredFragment(0);
+
+                        if (searchUsersResultFragment != null) {
+                            searchUsersResultFragment.onUsersLoaded((ArrayList<InstagramUser>) Utils.decodeUsersFromJsonResponse(response));
+                        }
+
+                        super.onSuccess(statusCode, headers, response);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String response, Throwable errorResponse) {
+                        super.onFailure(statusCode, headers, response, errorResponse);
+                    }
+                });
+
+                MainApplication.getRestClient().searchTagsByKeyword(name, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        SearchTagsResultFragment searchTagsResultFragment = (SearchTagsResultFragment) adapterViewPager.getRegisteredFragment(1);
+
+                        if (searchTagsResultFragment != null) {
+                            searchTagsResultFragment.onTagsLoaded((ArrayList<InstagramSearchTag>) Utils.decodeSearchTagsFromJsonResponse(response));
+                        }
 
                         super.onSuccess(statusCode, headers, response);
                     }

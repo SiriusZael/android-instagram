@@ -4,4 +4,9 @@
         <item quantity="one">%1$s like</item>
         <item quantity="other">%1$s likes</item>
     </plurals>
+
+    <plurals name="post_count">
+        <item quantity="one">%1$s post</item>
+        <item quantity="other">%1$s posts</item>
+    </plurals>
 </resources>

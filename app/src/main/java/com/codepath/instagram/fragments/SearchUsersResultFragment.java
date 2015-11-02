@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.adapters.InstagramUsersAdapter;
+import com.codepath.instagram.helpers.DividerItemDecoration;
 import com.codepath.instagram.models.InstagramUser;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by mrucker on 10/31/15.
  */
-public class SearchUsersResultFragment extends Fragment implements SearchFragment.SearchUsersFragmentListener {
+public class SearchUsersResultFragment extends Fragment {
     private ArrayList<InstagramUser> users;
     private RecyclerView rvSearchResults;
     private InstagramUsersAdapter adapter;
@@ -31,8 +32,11 @@ public class SearchUsersResultFragment extends Fragment implements SearchFragmen
         rvSearchResults = (RecyclerView) view.findViewById(R.id.rvUserSearchResults);
         adapter = new InstagramUsersAdapter(users);
         rvSearchResults.setAdapter(adapter);
-        rvSearchResults.setLayoutManager(new LinearLayoutManager(null));
+        rvSearchResults.setLayoutManager(new LinearLayoutManager(container.getContext()));
 
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(container.getContext(), DividerItemDecoration.VERTICAL_LIST);
+        rvSearchResults.addItemDecoration(itemDecoration);
+        
         return view;
     }
 
@@ -50,9 +54,9 @@ public class SearchUsersResultFragment extends Fragment implements SearchFragmen
         return fragment;
     }
 
-    @Override
     public void onUsersLoaded(ArrayList<InstagramUser> users) {
-        this.users = users;
+        this.users.clear();
+        this.users.addAll(users);
         adapter.notifyDataSetChanged();
     }
 }

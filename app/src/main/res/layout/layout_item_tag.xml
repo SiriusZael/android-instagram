@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
     android:paddingLeft="28dp"
     android:layout_height="64dp">
 
@@ -14,7 +15,6 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_below="@+id/tvSearchUserName"
         android:id="@+id/tvSearchTagPosts"
         android:fontFamily="san-serif"
         android:textSize="14sp"
@@ -22,4 +22,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

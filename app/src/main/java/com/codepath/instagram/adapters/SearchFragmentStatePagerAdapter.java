@@ -11,7 +11,6 @@ import com.codepath.instagram.helpers.SmartFragmentStatePagerAdapter;
  * Created by mrucker on 11/1/15.
  */
 public class SearchFragmentStatePagerAdapter extends SmartFragmentStatePagerAdapter {
-    private FragmentManager fm;
     private CharSequence[] pageTitles = {
             "Users",
             "Tags"
@@ -19,18 +18,15 @@ public class SearchFragmentStatePagerAdapter extends SmartFragmentStatePagerAdap
 
     public SearchFragmentStatePagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        fm = fragmentManager;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                SearchUsersResultFragment searchUsersResultFragment = SearchUsersResultFragment.newInstance();
-                return searchUsersResultFragment;
+                return SearchUsersResultFragment.newInstance();
             case 1:
-                SearchTagsResultFragment searchTagsResultFragment = SearchTagsResultFragment.newInstance();
-                return searchTagsResultFragment;
+                return SearchTagsResultFragment.newInstance();
             default:
                 return null;
         }

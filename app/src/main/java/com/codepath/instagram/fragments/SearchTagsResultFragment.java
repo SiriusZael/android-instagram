@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.adapters.InstagramTagsAdapter;
+import com.codepath.instagram.helpers.DividerItemDecoration;
 import com.codepath.instagram.models.InstagramSearchTag;
 
 import java.util.ArrayList;
@@ -41,6 +42,9 @@ public class SearchTagsResultFragment extends Fragment {
         rvTagSearchResults.setAdapter(adapter);
         rvTagSearchResults.setLayoutManager(new LinearLayoutManager(null));
 
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(container.getContext(), DividerItemDecoration.VERTICAL_LIST);
+        rvTagSearchResults.addItemDecoration(itemDecoration);
+
         return view;
     }
 
@@ -49,5 +53,11 @@ public class SearchTagsResultFragment extends Fragment {
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public void onTagsLoaded(ArrayList<InstagramSearchTag> tags) {
+        this.tags.clear();
+        this.tags.addAll(tags);
+        adapter.notifyDataSetChanged();
     }
 }
