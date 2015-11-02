@@ -1,6 +1,7 @@
 package com.codepath.instagram.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codepath.instagram.R;
+import com.codepath.instagram.activities.PhotoGridActivity;
 import com.codepath.instagram.models.InstagramUser;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -30,7 +32,15 @@ public class InstagramUsersAdapter extends RecyclerView.Adapter<InstagramUsersAd
         context = parent.getContext();
 
         View view = LayoutInflater.from(context).inflate(R.layout.layout_item_user, parent, false);
-        UsersViewHolder viewHolder = new UsersViewHolder(view);
+        UsersViewHolder viewHolder = new UsersViewHolder(view, new UsersViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(context, PhotoGridActivity.class);
+                intent.putExtra("keyword", users.get(position).userId);
+                intent.putExtra("photoType", "user");
+                context.startActivity(intent);
+            }
+        });
 
         return viewHolder;
     }
@@ -52,17 +62,29 @@ public class InstagramUsersAdapter extends RecyclerView.Adapter<InstagramUsersAd
         return users.size();
     }
 
-    public static class UsersViewHolder extends RecyclerView.ViewHolder {
+    public static class UsersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tvSearchUserName;
         public TextView tvSearchFullName;
         public SimpleDraweeView sdvUserProfilePicture;
+        public OnItemClickListener clickListener;
 
-        public UsersViewHolder(View layoutView) {
+        public UsersViewHolder(View layoutView, OnItemClickListener listener) {
             super(layoutView);
 
+            clickListener = listener;
+            layoutView.setOnClickListener(this);
             tvSearchUserName = (TextView) layoutView.findViewById(R.id.tvSearchUserName);
             tvSearchFullName = (TextView) layoutView.findViewById(R.id.tvSearchFullName);
             sdvUserProfilePicture = (SimpleDraweeView) layoutView.findViewById(R.id.sdvUserProfilePicture);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        public interface OnItemClickListener {
+            public void onItemClick(View view, int position);
         }
     }
 }

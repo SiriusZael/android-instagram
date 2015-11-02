@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v4.app.Fragment;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.fragments.PhotoGridFragment;
@@ -22,15 +21,8 @@ public class PhotoGridActivity extends AppCompatActivity {
         PhotoGridFragment fragment;
 
         String keyword = getIntent().getStringExtra("keyword");
-        int userId = getIntent().getIntExtra("userId", -1);
-
-        if (keyword != null) {
-            fragment = PhotoGridFragment.newInstance(keyword);
-        } else if (userId != -1) {
-            fragment = PhotoGridFragment.newInstance(userId);
-        } else {
-            fragment = (PhotoGridFragment) new Fragment();
-        }
+        String photoType = getIntent().getStringExtra("photoType");
+        fragment = PhotoGridFragment.newInstance(keyword, photoType);
 
         ft.replace(R.id.flPhotoGrid, fragment);
         ft.commit();

@@ -11,7 +11,13 @@ import android.view.ViewGroup;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.adapters.PhotoGridAdapter;
+import com.codepath.instagram.core.MainApplication;
+import com.codepath.instagram.helpers.Utils;
 import com.codepath.instagram.models.InstagramPost;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -19,25 +25,17 @@ import java.util.ArrayList;
  * Created by mrucker on 11/1/15.
  */
 public class PhotoGridFragment extends Fragment {
-    private int userId;
+    private String photoType;
     private String keyword;
     private ArrayList<InstagramPost> posts;
-    final private static String EXTRA_USER_ID = "userId";
-    final private static String EXTRA_SEARCH_TAG = "keyword";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        keyword = getArguments().getString(EXTRA_SEARCH_TAG, null);
-        userId = getArguments().getInt(EXTRA_USER_ID, -1);
+        keyword = getArguments().getString("keyword");
+        photoType = getArguments().getString("photoType");
         posts = new ArrayList<InstagramPost>();
-
-        if (keyword != null) {
-//            fetchTags
-        } else if (userId != -1) {
-//            fetchUser
-        }
     }
 
     @Nullable
@@ -45,26 +43,47 @@ public class PhotoGridFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photo_grid, container, false);
 
-        RecyclerView rvPhotoGrid = (RecyclerView) view.findViewById(R.id.rvPosts);
-        PhotoGridAdapter adapter = new PhotoGridAdapter(posts);
+        RecyclerView rvPhotoGrid = (RecyclerView) view.findViewById(R.id.rvPhotoGrid);
+        final PhotoGridAdapter adapter = new PhotoGridAdapter(posts);
         rvPhotoGrid.setAdapter(adapter);
         rvPhotoGrid.setLayoutManager(new GridLayoutManager(container.getContext(), 3));
+
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                posts.clear();
+                posts.addAll((ArrayList<InstagramPost>) Utils.decodePostsFromJsonResponse(response));
+                adapter.notifyDataSetChanged();
+
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String response, Throwable errorResponse) {
+                super.onFailure(statusCode, headers, response, errorResponse);
+            }
+        };
+
+        switch (photoType) {
+            case "user":
+                MainApplication.getRestClient().getRecentPostsByUserId(keyword, responseHandler);
+                break;
+            case "tag":
+                MainApplication.getRestClient().getRecentPostsByTag(keyword, responseHandler);
+                break;
+            default:
+                break;
+
+        }
 
         return view;
     }
 
-    public static PhotoGridFragment newInstance(int userId) {
+    public static PhotoGridFragment newInstance(String name, String photoType) {
         PhotoGridFragment fragment = new PhotoGridFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_USER_ID, userId);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    public static PhotoGridFragment newInstance(String keyword) {
-        PhotoGridFragment fragment = new PhotoGridFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_SEARCH_TAG, keyword);
+        bundle.putString("keyword", name);
+        bundle.putString("photoType", photoType);
         fragment.setArguments(bundle);
         return fragment;
     }

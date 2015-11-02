@@ -37,6 +37,7 @@ public class InstagramTagsAdapter extends RecyclerView.Adapter<InstagramTagsAdap
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(context, PhotoGridActivity.class);
                 intent.putExtra("keyword", tags.get(position).tag);
+                intent.putExtra("photoType", "tag");
                 context.startActivity(intent);
             }
         });
@@ -56,6 +57,7 @@ public class InstagramTagsAdapter extends RecyclerView.Adapter<InstagramTagsAdap
 
     @Override
     public int getItemCount() {
+
         return tags.size();
     }
 
@@ -67,6 +69,7 @@ public class InstagramTagsAdapter extends RecyclerView.Adapter<InstagramTagsAdap
         public TagsViewHolder(View layoutView, OnItemClickListener listener) {
             super(layoutView);
             clickListener = listener;
+            layoutView.setOnClickListener(this);
             tvSearchTagName = (TextView) layoutView.findViewById(R.id.tvSearchTagName);
             tvSearchTagPosts = (TextView) layoutView.findViewById(R.id.tvSearchTagPosts);
         }

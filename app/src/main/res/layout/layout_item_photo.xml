@@ -6,9 +6,6 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdvPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        fresco:placeholderImage="@color/gray_text"
-        fresco:actualImageScaleType="fitCenter"
-        android:gravity="center_vertical"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

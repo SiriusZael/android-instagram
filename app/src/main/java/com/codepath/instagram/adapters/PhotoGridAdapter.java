@@ -34,6 +34,7 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridAdapter.Phot
     @Override
     public void onBindViewHolder(PhotoGridViewHolder holder, int position) {
         InstagramPost post = posts.get(position);
+
         holder.sdvPhoto.setAspectRatio(1.0f);
         holder.sdvPhoto.setImageURI(Uri.parse(post.image.imageUrl));
     }

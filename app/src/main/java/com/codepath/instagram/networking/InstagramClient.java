@@ -37,4 +37,12 @@ public class InstagramClient extends OAuthBaseClient {
     public void searchTagsByKeyword(String keyword, JsonHttpResponseHandler responseHandler) {
         client.get(REST_URL + "tags/search?q=" + keyword, responseHandler);
     }
+
+    public void getRecentPostsByTag(String keyword, JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "tags/" + keyword + "/media/recent/", responseHandler);
+    }
+
+    public void getRecentPostsByUserId(String userId, JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "users/" + userId + "/media/recent/", responseHandler);
+    }
 }
