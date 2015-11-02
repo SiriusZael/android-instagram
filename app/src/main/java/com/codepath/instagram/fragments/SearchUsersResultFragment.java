@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by mrucker on 10/31/15.
  */
-public class SearchUsersResultFragment extends Fragment {
+public class SearchUsersResultFragment extends Fragment implements SearchFragment.SearchUsersFragmentListener {
     private ArrayList<InstagramUser> users;
     private RecyclerView rvSearchResults;
     private InstagramUsersAdapter adapter;
@@ -48,5 +48,11 @@ public class SearchUsersResultFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onUsersLoaded(ArrayList<InstagramUser> users) {
+        this.users = users;
+        adapter.notifyDataSetChanged();
     }
 }
