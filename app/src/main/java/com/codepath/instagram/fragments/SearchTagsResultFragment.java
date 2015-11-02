@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by mrucker on 11/1/15.
  */
-public class SearchTagsResultFragment extends Fragment {
+public class SearchTagsResultFragment extends Fragment{
     private RecyclerView rvTagSearchResults;
     private ArrayList<InstagramSearchTag> tags;
     private InstagramTagsAdapter adapter;
@@ -34,7 +34,7 @@ public class SearchTagsResultFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tag_search, container, false);
 
         rvTagSearchResults = (RecyclerView) view.findViewById(R.id.rvTagSearchResults);
