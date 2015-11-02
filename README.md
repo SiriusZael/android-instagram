@@ -1,3 +1,34 @@
+# Assignment 3 - *Instagram*
+
+**Instagram** is an android app that allows viewing your friends pictures through social media.
+
+Submitted by: **Matt Rucker**
+
+Time spent: **12** hours spent in total
+
+## User Stories
+The following user stories **must** be completed:
+
+* [x] User can login to Instagram using OAuth login.
+* [x] User can view their own feed.
+* [x] User can search for a user by username.
+* [x] User can search for a tag.
+
+
+The following user stories are **optional**:
+
+* [ ] Include a ProgressBar during network loading.
+* [x] User can get a grid of photos by clicking on a search result (i.e. a user or tag).
+
+
+## Video Walkthrough 
+
+Here's a walkthrough of implemented user stories:
+
+<img src='instagram-demo-3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 # Assignment 2 - *Instagram*
 
 **Instagram** is an android app that allows viewing your friends pictures through social media.
