@@ -7,7 +7,7 @@ import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class InstagramClient extends OAuthBaseClient {
-    private static final String REST_URL = "https://api.instagram.com/v1/";
+    public static final String REST_URL = "https://api.instagram.com/v1/";
     private static final String REST_CONSUMER_KEY = "7fb830b3d9f944caadde9827cacc50a2";
     private static final Class REST_API_CLASS = InstagramApi.class;
     private static final String REST_CONSUMER_SECRET = "eaaed381d5264040930f3930937c2aa2";

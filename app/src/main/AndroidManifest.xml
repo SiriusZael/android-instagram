@@ -48,6 +48,8 @@
             android:label="@string/title_activity_photo_grid"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <service android:name=".services.NetworkService" />
     </application>
 
 </manifest>

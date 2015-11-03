@@ -62,6 +62,16 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
         return viewHolder;
     }
 
+    public void clear() {
+        posts.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<InstagramPost> list) {
+        posts.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(PostsViewHolder holder, int position) {
         final InstagramPost post = this.posts.get(position);
@@ -107,6 +117,7 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
         } else if (post.commentsCount == 0) {
             holder.llComments.setVisibility(View.GONE);
         }
+
         int lastComments = post.comments.size() - 2;
         if (lastComments < 0) {
             lastComments = 0;
