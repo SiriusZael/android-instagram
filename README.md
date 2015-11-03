@@ -1,3 +1,26 @@
+# Assignment 4 - *Instagram*
+
+**Instagram** is an android app that allows viewing your friends pictures through social media.
+
+Submitted by: **Matt Rucker**
+
+Time spent: **6** hours spent in total
+
+## User Stories
+The following user stories **must** be completed:
+
+* [x] Add pull-to-refresh for the home feed with SwipeRefreshLayout.
+* [x] User can open the Instagram client offline and see last loaded feed.
+* [x] Create a background service to make the network request, load items into the DB and populate the view (for the user's home feed).
+
+## Video Walkthrough 
+
+Here's a walkthrough of implemented user stories:
+
+<img src='instagram-demo-4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 # Assignment 3 - *Instagram*
 
 **Instagram** is an android app that allows viewing your friends pictures through social media.
