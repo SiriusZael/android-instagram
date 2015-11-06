@@ -71,6 +71,11 @@ public class Utils {
         return searchTags == null ? new ArrayList<InstagramSearchTag>() : searchTags;
     }
 
+    public static InstagramUser decodeUserFromJsonResponse(JSONObject jsonObject) {
+        InstagramUser user = InstagramUser.fromJson(jsonObject.optJSONObject("data"));
+        return user == null ? new InstagramUser() : user;
+}
+
     private static JSONArray getDataJsonArray(JSONObject jsonObject) {
         JSONArray jsonArray = null;
         if (jsonObject != null) {

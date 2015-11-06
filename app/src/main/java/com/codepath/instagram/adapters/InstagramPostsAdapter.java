@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.activities.CommentsActivity;
+import com.codepath.instagram.fragments.ProfileFragment;
 import com.codepath.instagram.helpers.Utils;
 import com.codepath.instagram.models.InstagramComment;
 import com.codepath.instagram.models.InstagramPost;
@@ -46,9 +49,11 @@ import java.util.List;
 public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAdapter.PostsViewHolder> {
     private List<InstagramPost> posts;
     private Context context;
+    private Fragment fragment;
 
-    public InstagramPostsAdapter(List<InstagramPost> posts) {
+    public InstagramPostsAdapter(List<InstagramPost> posts, Fragment fragment) {
         this.posts = posts;
+        this.fragment = fragment;
     }
 
     @Override
@@ -86,6 +91,18 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
 
         holder.tvLikesCount.setText(likeText);
         holder.tvUserName.setText(userName);
+        holder.tvUserName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileFragment newFragment = ProfileFragment.newInstance(post.user.userId);
+                FragmentTransaction ft = fragment.getFragmentManager().beginTransaction();
+                ft.replace(R.id.flHome, newFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.addToBackStack(null);
+
+                ft.commit();
+            }
+        });
         holder.tvTimestamp.setText(timestamp);
 
         if (post.caption == null) {

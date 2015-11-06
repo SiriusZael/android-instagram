@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         HomeFragmentStatePagerAdapter adapterViewPager = new HomeFragmentStatePagerAdapter(getSupportFragmentManager(), this);

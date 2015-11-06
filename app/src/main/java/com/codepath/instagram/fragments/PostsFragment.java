@@ -37,6 +37,8 @@ public class PostsFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private InstagramPostsAdapter adapter;
     private Context context;
+    private String nextUrl;
+    private final boolean[] loading = {true};
 
     @Nullable
     @Override
@@ -46,12 +48,32 @@ public class PostsFragment extends Fragment {
         rvPosts = (RecyclerView) view.findViewById(R.id.rvPosts);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         posts = new ArrayList<InstagramPost>();
-        adapter = new InstagramPostsAdapter(posts);
+        adapter = new InstagramPostsAdapter(posts, PostsFragment.this);
         RecyclerView.ItemDecoration itemDecoration = new SimpleVerticalSpacerItemDecoration(24);
 
         rvPosts.addItemDecoration(itemDecoration);
         rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(context));
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        rvPosts.setLayoutManager(layoutManager);
+        rvPosts.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                if (loading[0]) {
+                    if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                        loading[0] = false;
+                        if (nextUrl != null) {
+                            Intent in = new Intent(context, NetworkService.class);
+                            in.putExtra("nextUrl", nextUrl);
+                            context.startService(in);
+                        }
+                    }
+                }
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -63,7 +85,6 @@ public class PostsFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
         context.startService(new Intent(context, NetworkService.class));
         return view;
     }
@@ -125,12 +146,17 @@ public class PostsFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             InstagramPosts posts = (InstagramPosts) intent.getSerializableExtra("posts");
+            nextUrl = intent.getStringExtra("nextUrl");
+            loading[0] = true;
 
-            adapter.clear();
             adapter.addAll(posts.posts);
             adapter.notifyDataSetChanged();
 
             swipeRefreshLayout.setRefreshing(false);
         }
     };
+
+    private void loadMorePosts(int page) {
+
+    }
 }

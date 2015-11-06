@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -18,5 +19,7 @@
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
     </style>
-
+    <style name="ButtonNoCaps" parent="Widget.AppCompat.Button">
+        <item name="textAllCaps">false</item>
+    </style>
 </resources>

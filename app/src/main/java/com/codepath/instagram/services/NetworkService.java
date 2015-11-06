@@ -41,6 +41,8 @@ public class NetworkService extends IntentService {
         final InstagramPosts serializedPosts = new InstagramPosts();
         final Intent in = new Intent(ACTION);
         final InstagramClientDatabase database = InstagramClientDatabase.getInstance(this);
+        final String nextUrl = intent.getStringExtra("nextUrl");
+        String requestUrl;
 
         if (!isNetworkAvailable()) {
             serializedPosts.posts = (ArrayList<InstagramPost>) database.getAllInstagramPosts();
@@ -51,16 +53,27 @@ public class NetworkService extends IntentService {
             InstagramClient client = MainApplication.getRestClient();
 
             RequestParams params = new RequestParams("access_token", client.checkAccessToken().getToken());
-            syncClient.get(this, InstagramClient.REST_URL + "users/self/feed", params, new JsonHttpResponseHandler() {
+            if (nextUrl != null) {
+                requestUrl = nextUrl;
+            } else {
+                requestUrl = InstagramClient.REST_URL + "users/self/feed";
+            }
+            syncClient.get(this, requestUrl, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
                     ArrayList<InstagramPost> newPosts = (ArrayList<InstagramPost>) Utils.decodePostsFromJsonResponse(responseBody);
                     serializedPosts.posts = newPosts;
+                    JSONObject pagination = responseBody.optJSONObject("pagination");
+                    String nextUrl = null;
+                    if (pagination != null) {
+                        nextUrl = pagination.optString("next_url");
+                    }
 
                     database.emptyAllTables();
                     database.addInstagramPosts(newPosts);
 
                     in.putExtra("posts", serializedPosts);
+                    in.putExtra("nextUrl", nextUrl);
                     LocalBroadcastManager.getInstance(NetworkService.this).sendBroadcast(in);
                 }
 

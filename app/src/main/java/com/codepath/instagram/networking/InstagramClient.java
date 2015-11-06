@@ -45,4 +45,8 @@ public class InstagramClient extends OAuthBaseClient {
     public void getRecentPostsByUserId(String userId, JsonHttpResponseHandler responseHandler) {
         client.get(REST_URL + "users/" + userId + "/media/recent/", responseHandler);
     }
+
+    public void getUserById(String userId, JsonHttpResponseHandler responseHandler) {
+        client.get(REST_URL + "users/" + userId, responseHandler);
+    }
 }

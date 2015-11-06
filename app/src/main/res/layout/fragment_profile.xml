@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="14dp"
+    android:clipToPadding="false"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_marginBottom="14dp"
+        android:id="@+id/rlHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdvProfilePageImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            fresco:placeholderImage="@drawable/gray_oval"
+            fresco:roundAsCircle="true"
+            fresco:actualImageScaleType="fitCenter"
+            android:gravity="center_vertical"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/sdvProfilePageImage"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/sdvProfilePageImage">
+            <LinearLayout
+                android:weightSum="3"
+                android:id="@+id/llMetrics"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/tvPostCount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/tvPostCount"
+                    android:id="@+id/tvFollowerCount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/tvFollowerCount"
+                    android:id="@+id/tvFollowingCount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnOption"
+                android:textSize="12sp"
+                style="@style/ButtonNoCaps"
+                android:layout_below="@+id/llMetrics"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="14dp"
+        android:id="@+id/llBio"
+        android:layout_below="@+id/rlHeader"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:fontFamily="sans-serif-medium"
+            android:textSize="13sp"
+            android:id="@+id/tvProfileFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="13sp"
+            android:id="@+id/tvUserCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_below="@+id/llBio"
+        android:id="@+id/flPhotoGrid"
+        android:layout_marginLeft="-14dp"
+        android:layout_marginRight="-14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+
+</RelativeLayout>

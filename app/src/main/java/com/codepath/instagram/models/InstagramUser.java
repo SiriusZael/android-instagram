@@ -13,6 +13,10 @@ public class InstagramUser implements Serializable {
     public String fullName;
     public String profilePictureUrl;
     public String userId;
+    public int postCount;
+    public int followCount;
+    public int followedByCount;
+    public String bio;
 
     public static InstagramUser fromJson(JSONObject jsonObject) {
         if (jsonObject == null) {
@@ -26,6 +30,14 @@ public class InstagramUser implements Serializable {
             user.userName = jsonObject.getString("username");
             user.fullName = jsonObject.optString("full_name", "");
             user.profilePictureUrl = jsonObject.getString("profile_picture");
+            if (jsonObject.has("counts")) {
+                JSONObject counts = jsonObject.getJSONObject("counts");
+                user.postCount = counts.getInt("media");
+                user.followCount = counts.getInt("follows");
+                user.followedByCount = counts.getInt("followed_by");
+            }
+            user.bio = jsonObject.optString("bio");
+
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
