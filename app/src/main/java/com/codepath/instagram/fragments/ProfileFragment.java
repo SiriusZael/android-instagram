@@ -79,7 +79,7 @@ public class ProfileFragment extends Fragment {
                 profileImage.setAspectRatio(1.0f);
                 profileImage.setImageURI(Uri.parse(user.profilePictureUrl));
 
-                PhotoGridFragment fragment = PhotoGridFragment.newInstance(user.userId, "user");
+                PhotoGridFragment fragment = PhotoGridFragment.newInstance(userId, "user");
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.flPhotoGrid, fragment);
                 ft.commit();
@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userId = this.getArguments().getString("userId", "");
+        userId = this.getArguments().getString("userId");
     }
 
     @Override

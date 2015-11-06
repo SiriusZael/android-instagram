@@ -63,7 +63,7 @@ public class PostsFragment extends Fragment {
                 int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
                 if (loading[0]) {
-                    if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                    if (visibleItemCount + pastVisibleItems >= totalItemCount - 3) {
                         loading[0] = false;
                         if (nextUrl != null) {
                             Intent in = new Intent(context, NetworkService.class);

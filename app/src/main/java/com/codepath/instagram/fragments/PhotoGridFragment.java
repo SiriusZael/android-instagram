@@ -28,6 +28,7 @@ public class PhotoGridFragment extends Fragment {
     private String photoType;
     private String keyword;
     private ArrayList<InstagramPost> posts;
+    private PhotoGridAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,6 @@ public class PhotoGridFragment extends Fragment {
 
         keyword = getArguments().getString("keyword");
         photoType = getArguments().getString("photoType");
-        posts = new ArrayList<InstagramPost>();
     }
 
     @Nullable
@@ -43,26 +43,32 @@ public class PhotoGridFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photo_grid, container, false);
 
+        posts = new ArrayList<InstagramPost>();
+        return view;
+    }
+    private JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            posts.clear();
+            posts.addAll((ArrayList<InstagramPost>) Utils.decodePostsFromJsonResponse(response));
+            adapter.notifyDataSetChanged();
+
+            super.onSuccess(statusCode, headers, response);
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, String response, Throwable errorResponse) {
+            super.onFailure(statusCode, headers, response, errorResponse);
+        }
+    };
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         RecyclerView rvPhotoGrid = (RecyclerView) view.findViewById(R.id.rvPhotoGrid);
-        final PhotoGridAdapter adapter = new PhotoGridAdapter(posts);
+        adapter = new PhotoGridAdapter(posts);
         rvPhotoGrid.setAdapter(adapter);
-        rvPhotoGrid.setLayoutManager(new GridLayoutManager(container.getContext(), 3));
-
-        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                posts.clear();
-                posts.addAll((ArrayList<InstagramPost>) Utils.decodePostsFromJsonResponse(response));
-                adapter.notifyDataSetChanged();
-
-                super.onSuccess(statusCode, headers, response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String response, Throwable errorResponse) {
-                super.onFailure(statusCode, headers, response, errorResponse);
-            }
-        };
+        rvPhotoGrid.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
 
         switch (photoType) {
             case "user":
@@ -73,10 +79,7 @@ public class PhotoGridFragment extends Fragment {
                 break;
             default:
                 break;
-
         }
-
-        return view;
     }
 
     public static PhotoGridFragment newInstance(String name, String photoType) {
