@@ -1,3 +1,33 @@
+# Assignment 5 - *Instagram*
+
+**Instagram** is an android app that allows viewing your friends pictures through social media.
+
+Submitted by: **Matt Rucker**
+
+Time spent: **6** hours spent in total
+
+The following user stories are **required**:
+
+* [x] Add the Profile Page to your TabLayout to see your own posts, follower count, following count.
+* [x] Add the ability to see a your photos below the profile information
+* [x] Clicking on any user's profile image goes to that user's profile page.
+* [x] Replace the ActionBar with a ToolBar and style it to match the actual Instagram app.
+* [x] Add infinite scroll to your home feed.
+
+
+The following user stories are **optional**:
+
+* [ ] Style the TabLayout to match the actual Instagram app.
+* [ ] Show a special view when the search results RecyclerView is empty.
+
+## Video Walkthrough 
+
+Here's a walkthrough of implemented user stories:
+
+<img src='instagram-demo-5.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 # Assignment 4 - *Instagram*
 
 **Instagram** is an android app that allows viewing your friends pictures through social media.
